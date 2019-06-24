@@ -2,9 +2,9 @@
   "name": "sci_ts",
   "version": "0.0.1",
   "description": "SCI system with nodejs coded in typescript",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "tsc && node ./build/app.js0"
+    "test": "tsc   && node ./build/app.js "
   },
   "repository": {
     "type": "git",
