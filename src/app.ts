@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import {createExpressServer, useContainer, useExpressServer} from "routing-controllers";
 import {Container} from "typedi";
-import {HomeController} from "./controllers/HomeController";
+import controllers from './controllers'
 let port: number = 3000;
 
 /**
@@ -18,9 +18,7 @@ const expressApp = createExpressServer({
      * We can add options about how routing-controllers should configure itself.
      * Here we specify what controllers should be registered in our express server.
      */
-    controllers: [
-        HomeController
-    ]
+    controllers: controllers.controllers
 });
 
 /**
