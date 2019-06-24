@@ -1,0 +1,38 @@
+{
+  "name": "sci_ts",
+  "version": "0.0.1",
+  "description": "SCI system with nodejs coded in typescript",
+  "main": "app.js",
+  "scripts": {
+    "test": "tsc   && node ./build/app.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snet-al/sci_ts.git"
+  },
+  "keywords": [
+    "sci"
+  ],
+  "author": "Bledar Shehu && Mario Alla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/snet-al/sci_ts/issues"
+  },
+  "homepage": "https://github.com/snet-al/sci_ts#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "multer": "1.3.0",
+    "reflect-metadata": "0.1.10",
+    "routing-controllers": "0.7.0",
+    "typedi": "0.5.2"
+  },
+  "devDependencies": {
+    "@types/body-parser": "1.16.3",
+    "@types/express": "4.0.35",
+    "@types/multer": "0.0.33",
+    "@types/node": "7.0.22",
+    "nodemon": "^1.19.1",
+    "typescript": "2.3.3"
+  }
+}

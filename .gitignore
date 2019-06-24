@@ -2,6 +2,16 @@
 logs
 *.log
 npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# Build directory
+build
+# Logs
+logs
+*.log
+npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
@@ -59,3 +69,27 @@ typings/
 
 # next.js build output
 .next
+# Editor's config directories
+*.vscode
+*.idea
+*.git
+.idea
+.project
+.git
+.vscode
+
+# MacOS related files
+*.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows related files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Optional npm cache directory
+.npm
+
