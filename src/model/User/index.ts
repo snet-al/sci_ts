@@ -30,11 +30,6 @@ export class User {
     delProjectDetails(projectId: number){
         let deletedProjectDetails: any;
        let d = this.details.getAllProjectsDetails();
-       /* d.forEach(det =>{
-            if (det.id == projectId){
-                deletedProjectDetails = d.splice(d.indexOf(det), 1)
-            }
-        });*/
        deletedProjectDetails = d.splice(this.id,1);
         return deletedProjectDetails
     }
