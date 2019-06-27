@@ -30,8 +30,8 @@ export class User {
         console.log("Loaded users: ", users);
 
         return  users;
-        console.log("\t\t ** **  \n\t\t ** **  \n");
-
+        console.log(`\t\t\t ** Closing Connection ** \n`)
+        connection.close()
     }).catch(error => console.log(error));
 
         return {failed: true}

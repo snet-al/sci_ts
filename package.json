@@ -2,9 +2,9 @@
    "name": "sci_ts",
    "version": "0.0.1",
    "description": "SCI system with nodejs coded in typescript",
-   "main": "app.js",
+   "main": "nodemon -x ts-node  src/app.ts",
    "scripts": {
-      "test": "ts-node src/app.ts -watch "
+      "start": "nodemon -x ts-node  src/app.ts  "
    },
    "repository": {
       "type": "git",

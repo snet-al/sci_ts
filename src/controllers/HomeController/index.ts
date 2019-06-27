@@ -10,7 +10,7 @@ export class HomeController {
     constructor(protected user: User){
 
     }
-    @Get()
+    @Get('/')
     home(){
         return 'Hello World'
     }
@@ -20,7 +20,7 @@ export class HomeController {
         return [this.user.getAllDets(), this.user.getDetails()]
     }
 
-    @Post("/info-project/:id")
+    @Get("/info-project/:id")
     one(@Param("id") id: number): Details {
         return this.user.details.projectNo(id)
     }
