@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, IsNull, PrimaryGeneratedColumn} from "typeorm";
+import {Details} from "../model/User/Details";
 
 @Entity()
 export class UserEntity {

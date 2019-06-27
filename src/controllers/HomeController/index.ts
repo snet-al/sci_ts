@@ -17,7 +17,7 @@ export class HomeController {
 
     @Get("/projects")
     all() {
-        return this.user.getAllDets()
+        return [this.user.getAllDets(), this.user.getDetails()]
     }
 
     @Post("/info-project/:id")

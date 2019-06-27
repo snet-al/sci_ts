@@ -2,7 +2,7 @@ import "reflect-metadata";
 import {createExpressServer, useContainer, useExpressServer} from "routing-controllers";
 import {Container} from "typedi";
 import controllers from './controllers'
-let port: number = 3000;
+let port: number = 3010;
 
 /**
  * Setup routing-controllers to use typedi container.
@@ -27,3 +27,4 @@ const expressApp = createExpressServer({
 expressApp.listen(port);
 
 console.log(`Server is up and running at port ${port}`);
+

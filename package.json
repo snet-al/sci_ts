@@ -4,8 +4,7 @@
    "description": "SCI system with nodejs coded in typescript",
    "main": "app.js",
    "scripts": {
-      "test": "tsc   && node ./build/app.js ",
-      "start": "ts-node src/index.ts"
+      "test": "ts-node src/app.ts -watch "
    },
    "repository": {
       "type": "git",

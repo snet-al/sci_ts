@@ -1,9 +1,8 @@
 import {Details} from './Details'
 import {Service} from "typedi";
 import {exec} from "child_process";
-import {UserEntity} from "../../entity/UserEntity";
 import {createConnection} from "typeorm";
-import {EUser} from "../../entity/eUser"
+import {UserEntity} from "../../entity/UserEntity";
 
 
 @Service()
@@ -24,10 +23,18 @@ export class User {
     }
 
     getDetails(){
-        return {
-            ProjectId: this.projectId,
-            ProjectDetails: this.details.projectNo(this.projectId)
-        }
+
+        createConnection().then(async connection => {
+            console.log("Loading users from the database...");
+        const users = await connection.manager.find(UserEntity);
+        console.log("Loaded users: ", users);
+
+        return  users;
+        console.log("\t\t ** **  \n\t\t ** **  \n");
+
+    }).catch(error => console.log(error));
+
+        return {failed: true}
     }
 
     delProjectDetails(projectId: number){
@@ -46,20 +53,20 @@ export class User {
         createConnection().then(async connection => {
 
             console.log("Inserting a new user into the database...");
-            const user = new (EUser);
+            const user = new (UserEntity);
             user.firstName = this.firstName;
             user.lastName = this.lastName;
-            user.age = this.projectId;
-            //user.UID = this.UID;
-
+            user.projectId = this.projectId;
+            user.UID = this.UID;
             await connection.manager.save(user);
             console.log("Saved a new user with id: " + user.id);
 
             console.log("Loading users from the database...");
-            const users = await connection.manager.find(EUser);
+            const users = await connection.manager.find(UserEntity);
             console.log("Loaded users: ", users);
 
-            console.log("Here you can setup and run express/koa/any other framework.");
+            console.log("\t\t\t ** Finished  **  \n\t\t ** Closing Connection **  \n");
+            connection.close()
 
         }).catch(error => console.log(error));
 
@@ -67,7 +74,7 @@ export class User {
     }
 
     deploy(){
-        this.registerData()
+        this.registerData();
         exec(`./shellScripts/shellScriptProject_No${this.projectId}.sh`, (err, stdout, stderr) => {
             // your callback
             console.log(`\t\t******** ************* \t EXECUTED   **************** ******** \n 
