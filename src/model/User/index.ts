@@ -1,11 +1,9 @@
 import {Details} from './Details'
-import {Container, Service} from "typedi";
+import { Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
-import {createConnection, Repository} from "typeorm";
+import { Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
-import {connection} from "../../app";
-import {UserDetailEntity} from "./Details/index.entity";
 
 @Service()
 export class User {
@@ -18,8 +16,7 @@ export class User {
     public UID: number;
 
     constructor(
-        @InjectRepository(UserEntity) public userEntity: Repository<UserEntity>,
-        @InjectRepository(UserDetailEntity) public userDetails: Repository<UserDetailEntity>
+        @InjectRepository(UserEntity) public userEntity: Repository<UserEntity>, public detail : Details
     ) {}
 
     getUserWithID(id: number){
@@ -28,31 +25,11 @@ export class User {
 
 
     getAllUserDettails(){
-
-        connection.then(async c => {
-
-            console.log("Loading User Detail from the database...");
-            const users = await c.manager.find(UserDetailEntity);
-            console.log("Loaded users: ", users);
-
-            console.log("\t\t\t ** Finished  **  \n\t\t ** **  \n");
-
-        }).catch(error => console.log(error));
+        this.detail.userDetails.find()
     }
 
     registerData(){
-
-        connection.then(async c => {
-            console.log("Inserting a new user into the database...");
-            const user = new (UserEntity);
-            user.firstName = this.firstName;
-            user.lastName = this.lastName;
-            user.projectId = this.projectId;
-            user.UID = this.UID;
-            await c.manager.save(user);
-            console.log("Saved a new user with id: " + user.id);
-
-        }).catch(error => console.log(error));
+        this.userEntity.create()
 
 
     }
@@ -72,14 +49,6 @@ export class User {
 
 
     getAll() {
-        connection.then(async c => {
-
-            console.log("Loading users from the database...");
-            const users = await c.manager.find(UserEntity);
-            console.log("Loaded users: ", users);
-
-            console.log("\t\t\t ** Finished  **  \n\t\t ** **  \n");
-
-        }).catch(error => console.log(error));
+       this.userEntity.find()
     }
 }
