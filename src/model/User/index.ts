@@ -5,6 +5,7 @@ import {exec} from "child_process";
 import {createConnection, Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 import {connection} from "../../app";
+import {UserDetailEntity} from "./Details/index.entity";
 
 @Service()
 export class User {
@@ -17,44 +18,39 @@ export class User {
     public UID: number;
 
     constructor(
-        @InjectRepository(UserEntity) public userEntity: Repository<UserEntity>, public details: Details
+        @InjectRepository(UserEntity) public userEntity: Repository<UserEntity>,
+        @InjectRepository(UserDetailEntity) public userDetails: Repository<UserDetailEntity>
     ) {}
 
-    getDetails(){
-
-        return {failed: true}
-    }
-
-    delProjectDetails(projectId: number){
-        let deletedProjectDetails: any;
-       let d = this.details.getAllProjectsDetails();
-       deletedProjectDetails = d.splice(this.id,1);
-        return deletedProjectDetails
+    getUserWithID(id: number){
+        return this.userEntity.findOne(id)
     }
 
 
-    getAllDets(){
-        return this.details.getAllProjectsDetails()
+    getAllUserDettails(){
+
+        connection.then(async c => {
+
+            console.log("Loading User Detail from the database...");
+            const users = await c.manager.find(UserDetailEntity);
+            console.log("Loaded users: ", users);
+
+            console.log("\t\t\t ** Finished  **  \n\t\t ** **  \n");
+
+        }).catch(error => console.log(error));
     }
 
     registerData(){
 
-        connection.then(async connection => {
+        connection.then(async c => {
             console.log("Inserting a new user into the database...");
             const user = new (UserEntity);
             user.firstName = this.firstName;
             user.lastName = this.lastName;
             user.projectId = this.projectId;
             user.UID = this.UID;
-            await connection.manager.save(user);
+            await c.manager.save(user);
             console.log("Saved a new user with id: " + user.id);
-
-            console.log("Loading users from the database...");
-            const users = await connection.manager.find(UserEntity);
-            console.log("Loaded users: ", users);
-
-            console.log("\t\t\t ** Finished  **  \n\t\t ** Closing Connection **  \n");
-            connection.close()
 
         }).catch(error => console.log(error));
 
@@ -75,5 +71,15 @@ export class User {
     }
 
 
+    getAll() {
+        connection.then(async c => {
 
+            console.log("Loading users from the database...");
+            const users = await c.manager.find(UserEntity);
+            console.log("Loaded users: ", users);
+
+            console.log("\t\t\t ** Finished  **  \n\t\t ** **  \n");
+
+        }).catch(error => console.log(error));
+    }
 }

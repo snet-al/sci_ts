@@ -1,29 +1,29 @@
-import {JsonController, Get, Post, Param, Delete, Body, Put} from "routing-controllers";
+import {JsonController, Get, Post, Param, Body} from "routing-controllers";
 import {Service} from "typedi";
 import {User} from "../../model/User";
-import {Details} from "../../model/User/Details";
+import {InjectRepository} from "typeorm-typedi-extensions";
 
 @Service()
 @JsonController()
 export class HomeController {
 
     constructor(
-        protected user: User
-    ) {}
+        @InjectRepository(User) public user: User,
+    ){}
 
     @Get('/')
-    home(){
-        return 'Hello World'
+    getAll(){
+        return this.user.getAll()
     }
 
     @Get("/projects")
     all() {
-        return [this.user.getAllDets(), this.user.getDetails()]
+        return this.user.getAllUserDettails()
     }
 
     @Get("/info-project/:id")
-    one(@Param("id") id: number): Details {
-        return this.user.details.projectNo(id)
+    one(@Param("id") id: number): any {
+        return this.user.getUserWithID(id)
     }
 
 
@@ -33,11 +33,5 @@ export class HomeController {
         return user
     }
 
-
-    @Delete("/delete-project/:id")
-    delete(@Param("id") id: number): any {
-        console.log(`Going to delete details for project with id: ${id}`)
-        return this.user.delProjectDetails(id)
-    }
 
 }
