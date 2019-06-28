@@ -1,28 +1,15 @@
-import {User} from "../index";
 import {Service} from "typedi";
+import {InjectRepository} from "typeorm-typedi-extensions";
+import {UserDetailEntity} from "./index.entity";
 
 @Service()
 export class Details {
 
+    constructor(
+        @InjectRepository(UserDetailEntity) private userDetail: UserDetailEntity
+    ) {}
+
     private details: Array<any>;
-    constructor (opt?: any) {
-        this.details = [{
-            name: "name",
-            id: "id",
-            description: "description"
-        }, {
-            name: "name stuff",
-            id: "id blank",
-            description: "description stuff"
-        }, {
-            name: "name other",
-            id: "id stuff",
-            description: "description IDK"
-        }]
-
-    }
-
-
 
     getAllProjectsDetails(){
         return this.details

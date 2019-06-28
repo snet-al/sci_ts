@@ -7,20 +7,21 @@ import {Details} from "../../model/User/Details";
 @JsonController()
 export class HomeController {
 
-    constructor(protected user: User){
+    constructor(
+        protected user: User
+    ) {}
 
-    }
-    @Get()
+    @Get('/')
     home(){
         return 'Hello World'
     }
 
     @Get("/projects")
     all() {
-        return this.user.getAllDets()
+        return [this.user.getAllDets(), this.user.getDetails()]
     }
 
-    @Post("/info-project/:id")
+    @Get("/info-project/:id")
     one(@Param("id") id: number): Details {
         return this.user.details.projectNo(id)
     }

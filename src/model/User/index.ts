@@ -1,40 +1,38 @@
 import {Details} from './Details'
-import {Service} from "typedi";
+import {Container, Service} from "typedi";
+import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
-
+import {createConnection} from "typeorm";
+import {UserEntity} from "./index.entity";
 
 @Service()
 export class User {
 
     id: number;
     name: string;
-    private projectId: number;
-    private lastName: string;
-    private firstName: string;
-    private UID: number;
+    public projectId: number;
+    public lastName: string;
+    public firstName: string;
+    public UID: number;
 
-    constructor(UID: number, FirstName: string, LastName: string, public details: Details, ProjectId: number) {
-        this.UID = UID;
-        this.firstName = FirstName;
-        this.lastName = LastName;
-        this.projectId = ProjectId
-    }
+    constructor(
+        @InjectRepository(UserEntity) public userEntity: UserEntity,
+        public details: Details
+    ) {}
 
     getDetails(){
-        return {
-            ProjectId: this.projectId,
-            ProjectDetails: this.details.projectNo(this.projectId)
-        }
+
+        //
+        // const users = connection.manager.find(UserEntity);
+        // console.log("Loaded users: ", users);
+        // return  users;
+
+        return {failed: true}
     }
 
     delProjectDetails(projectId: number){
         let deletedProjectDetails: any;
        let d = this.details.getAllProjectsDetails();
-       /* d.forEach(det =>{
-            if (det.id == projectId){
-                deletedProjectDetails = d.splice(d.indexOf(det), 1)
-            }
-        });*/
        deletedProjectDetails = d.splice(this.id,1);
         return deletedProjectDetails
     }
@@ -44,7 +42,51 @@ export class User {
         return this.details.getAllProjectsDetails()
     }
 
+    registerData(){
+
+
+        console.log("Inserting a new user into the database...");
+           /* const user = new (UserEntity);
+            user.firstName = this.firstName;
+            user.lastName = this.lastName;
+            user.projectId = this.projectId;
+            user.UID = this.UID;
+            connection.manager.save(user);
+            console.log("Saved a new user with id: " + user.id);
+
+            console.log("Loading users from the database...");
+            const users = connection.manager.find(UserEntity);
+            console.log("Loaded users: ", users);
+
+            console.log("\t\t\t ** Finished  **  \n\t\t ** Closing Connection **  \n");
+*/
+
+
+        createConnection().then(async connection => {
+
+            console.log("Inserting a new user into the database...");
+            const user = new (UserEntity);
+            user.firstName = this.firstName;
+            user.lastName = this.lastName;
+            user.projectId = this.projectId;
+            user.UID = this.UID;
+            await connection.manager.save(user);
+            console.log("Saved a new user with id: " + user.id);
+
+            console.log("Loading users from the database...");
+            const users = await connection.manager.find(UserEntity);
+            console.log("Loaded users: ", users);
+
+            console.log("\t\t\t ** Finished  **  \n\t\t ** Closing Connection **  \n");
+            connection.close()
+
+        }).catch(error => console.log(error));
+
+
+    }
+
     deploy(){
+        this.registerData();
         exec(`./shellScripts/shellScriptProject_No${this.projectId}.sh`, (err, stdout, stderr) => {
             // your callback
             console.log(`\t\t******** ************* \t EXECUTED   **************** ******** \n 
