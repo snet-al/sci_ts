@@ -1,38 +1,40 @@
 import "reflect-metadata";
-import {createExpressServer, useContainer, useExpressServer} from "routing-controllers";
+import {createExpressServer, useContainer} from "routing-controllers";
 import {Container} from "typedi";
 import controllers from './controllers'
-import {dbConfig} from "./OptionsDB"
-import {Connection, ConnectionManager, ConnectionOptions, createConnection} from 'typeorm';
-//
-// const c = new ConnectionManager();
-// // user ormconfig.conf file
-// export const connection = c.create(dbConfig);
+import {createConnection} from 'typeorm';
+let typeorm = require('typeorm');
+
+useContainer(Container);
+typeorm.useContainer(Container);
+
+const getType = (envType: any) => {
+    switch (envType) {
+        case 'mysql':
+        case 'mssql':
+        case 'postgres':
+        case 'mariadb':
+        case 'mongodb':
+            return envType;
+        default:
+            return 'mysql';
+    }
+};
+
+const connection = createConnection({
+    type: getType(process.env.TYPEORM_CONNECTION || 'mysql'),
+    host: process.env.TYPEORM_HOST || 'localhost',
+    port: Number.parseInt(process.env.TYPEORM_PORT || '3306'),
+    username: process.env.TYPEORM_USERNAME ||  "admin",
+    password: process.env.TYPEORM_PASSWORD || "admin",
+    database: process.env.TYPEORM_DATABASE ||  "ecm"
+});
 let port: number = 3010;
 
-
-
-
-
-/**
- * Setup routing-controllers to use typedi container.
- */
-useContainer(Container);
-
-/**
- * We create a new express server instance.
- * We could have also use useExpressServer here to attach controllers to an existing express instance.
- */
 const expressApp = createExpressServer({
-    /**
-     * We can add options about how routing-controllers should configure itself.
-     * Here we specify what controllers should be registered in our express server.
-     */
     controllers: controllers.controllers
 });
-/**
- * Start the express app.
- */
+
 expressApp.listen(port);
 
 console.log(`Server is up and running at port ${port}`);

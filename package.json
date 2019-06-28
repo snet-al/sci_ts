@@ -2,9 +2,9 @@
    "name": "sci_ts",
    "version": "0.0.1",
    "description": "SCI system with nodejs coded in typescript",
-   "main": "nodemon -x ts-node  src/app.ts",
+   "main": "app.ts",
    "scripts": {
-      "start": "nodemon -x ts-node  src/app.ts  "
+      "start": "nodemon -x ts-node src/app.ts"
    },
    "repository": {
       "type": "git",
@@ -23,11 +23,12 @@
       "body-parser": "^1.19.0",
       "express": "^4.17.1",
       "multer": "1.4.1",
+      "mysql": "^2.17.1",
+      "pg": "^7.11.0",
       "reflect-metadata": "^0.1.13",
       "routing-controllers": "0.7.7",
       "typedi": "0.8.0",
       "typeorm": "0.2.18",
-      "pg": "^7.11.0",
       "typeorm-typedi-extensions": "latest"
    },
    "devDependencies": {

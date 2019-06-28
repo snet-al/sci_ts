@@ -7,9 +7,10 @@ import {Details} from "../../model/User/Details";
 @JsonController()
 export class HomeController {
 
-    constructor(protected user: User){
+    constructor(
+        protected user: User
+    ) {}
 
-    }
     @Get('/')
     home(){
         return 'Hello World'

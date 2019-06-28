@@ -3,9 +3,7 @@ import {Container, Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
 import {createConnection} from "typeorm";
-import {UserEntity} from "../../entity/UserEntity";
-// import {connection} from "../../app";
-import {useContainer} from "routing-controllers";
+import {UserEntity} from "./index.entity";
 
 @Service()
 export class User {
@@ -18,9 +16,9 @@ export class User {
     public UID: number;
 
     constructor(
-    @InjectRepository(UserEntity) public u: UserEntity,
-    @InjectRepository(Details) public details: Details){
-    }
+        @InjectRepository(UserEntity) public userEntity: UserEntity,
+        public details: Details
+    ) {}
 
     getDetails(){
 

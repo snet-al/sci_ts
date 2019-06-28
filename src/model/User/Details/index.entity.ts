@@ -1,8 +1,8 @@
-import {Column, Entity, IsNull, PrimaryGeneratedColumn} from "typeorm";
-import {Details} from "../../model/User/Details";
+import {Column, Entity, EntityRepository, IsNull, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export class UserEntity {
+@EntityRepository()
+export class UserDetailEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
