@@ -10,11 +10,9 @@ export class UserDetailEntity {
     projectId: number;
 
     @Column()
-    lastName: string;
+    projectID: string;
 
     @Column()
-    firstName: string;
+    projectDetails: string;
 
-    @Column()
-    UID: number;
 }

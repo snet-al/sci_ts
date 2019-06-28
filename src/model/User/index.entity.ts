@@ -1,5 +1,5 @@
 import {Column, Entity, EntityRepository, IsNull, PrimaryGeneratedColumn} from "typeorm";
-import {Details} from "./Details";
+
 
 @Entity()
 @EntityRepository()

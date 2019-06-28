@@ -2,8 +2,9 @@ import {Details} from './Details'
 import {Container, Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
-import {createConnection} from "typeorm";
+import {createConnection, Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
+import {connection} from "../../app";
 
 @Service()
 export class User {
@@ -16,16 +17,10 @@ export class User {
     public UID: number;
 
     constructor(
-        @InjectRepository(UserEntity) public userEntity: UserEntity,
-        public details: Details
+        @InjectRepository(UserEntity) public userEntity: Repository<UserEntity>, public details: Details
     ) {}
 
     getDetails(){
-
-        //
-        // const users = connection.manager.find(UserEntity);
-        // console.log("Loaded users: ", users);
-        // return  users;
 
         return {failed: true}
     }
@@ -44,26 +39,7 @@ export class User {
 
     registerData(){
 
-
-        console.log("Inserting a new user into the database...");
-           /* const user = new (UserEntity);
-            user.firstName = this.firstName;
-            user.lastName = this.lastName;
-            user.projectId = this.projectId;
-            user.UID = this.UID;
-            connection.manager.save(user);
-            console.log("Saved a new user with id: " + user.id);
-
-            console.log("Loading users from the database...");
-            const users = connection.manager.find(UserEntity);
-            console.log("Loaded users: ", users);
-
-            console.log("\t\t\t ** Finished  **  \n\t\t ** Closing Connection **  \n");
-*/
-
-
-        createConnection().then(async connection => {
-
+        connection.then(async connection => {
             console.log("Inserting a new user into the database...");
             const user = new (UserEntity);
             user.firstName = this.firstName;

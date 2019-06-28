@@ -7,7 +7,9 @@ export class Details {
 
     constructor(
         @InjectRepository(UserDetailEntity) private userDetail: UserDetailEntity
-    ) {}
+    ) {
+
+    }
 
     private details: Array<any>;
 
