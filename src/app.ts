@@ -2,7 +2,17 @@ import "reflect-metadata";
 import {createExpressServer, useContainer, useExpressServer} from "routing-controllers";
 import {Container} from "typedi";
 import controllers from './controllers'
+import {dbConfig} from "./OptionsDB"
+import {Connection, ConnectionManager, ConnectionOptions, createConnection} from 'typeorm';
+
+const c = new ConnectionManager();
+// user ormconfig.conf file
+export const connection = c.create(dbConfig);
 let port: number = 3010;
+
+
+
+
 
 /**
  * Setup routing-controllers to use typedi container.
@@ -20,7 +30,6 @@ const expressApp = createExpressServer({
      */
     controllers: controllers.controllers
 });
-
 /**
  * Start the express app.
  */

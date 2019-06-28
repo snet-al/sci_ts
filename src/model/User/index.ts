@@ -1,8 +1,10 @@
 import {Details} from './Details'
 import {Service} from "typedi";
+import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
 import {createConnection} from "typeorm";
 import {UserEntity} from "../../entity/UserEntity";
+import {connection} from "../../app";
 
 
 @Service()
@@ -10,20 +12,22 @@ export class User {
 
     id: number;
     name: string;
-    private projectId: number;
-    private lastName: string;
-    private firstName: string;
-    private UID: number;
+    public projectId: number;
+    public lastName: string;
+    public firstName: string;
+    public UID: number;
 
-    constructor(UID: number, FirstName: string, LastName: string, public details: Details, ProjectId: number) {
-        this.UID = UID;
-        this.firstName = FirstName;
-        this.lastName = LastName;
-        this.projectId = ProjectId
-    }
+    constructor(
+    @InjectRepository(UserEntity) public u: UserEntity,
+    @InjectRepository(Details) public details: Details){    }
 
     getDetails(){
 
+
+        const users = connection.manager.find(UserEntity);
+        console.log("Loaded users: ", users);
+        return  users;
+        /*
         createConnection().then(async connection => {
             console.log("Loading users from the database...");
         const users = await connection.manager.find(UserEntity);
@@ -33,7 +37,7 @@ export class User {
         console.log(`\t\t\t ** Closing Connection ** \n`)
         connection.close()
     }).catch(error => console.log(error));
-
+*/
         return {failed: true}
     }
 
@@ -50,6 +54,25 @@ export class User {
     }
 
     registerData(){
+
+
+        console.log("Inserting a new user into the database...");
+           /* const user = new (UserEntity);
+            user.firstName = this.firstName;
+            user.lastName = this.lastName;
+            user.projectId = this.projectId;
+            user.UID = this.UID;
+            connection.manager.save(user);
+            console.log("Saved a new user with id: " + user.id);
+
+            console.log("Loading users from the database...");
+            const users = connection.manager.find(UserEntity);
+            console.log("Loaded users: ", users);
+
+            console.log("\t\t\t ** Finished  **  \n\t\t ** Closing Connection **  \n");
+*/
+
+
         createConnection().then(async connection => {
 
             console.log("Inserting a new user into the database...");
