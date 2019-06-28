@@ -1,11 +1,11 @@
 import {Details} from './Details'
-import {Service} from "typedi";
+import {Container, Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
 import {createConnection} from "typeorm";
 import {UserEntity} from "../../entity/UserEntity";
-import {connection} from "../../app";
-
+// import {connection} from "../../app";
+import {useContainer} from "routing-controllers";
 
 @Service()
 export class User {
@@ -19,25 +19,16 @@ export class User {
 
     constructor(
     @InjectRepository(UserEntity) public u: UserEntity,
-    @InjectRepository(Details) public details: Details){    }
+    @InjectRepository(Details) public details: Details){
+    }
 
     getDetails(){
 
+        //
+        // const users = connection.manager.find(UserEntity);
+        // console.log("Loaded users: ", users);
+        // return  users;
 
-        const users = connection.manager.find(UserEntity);
-        console.log("Loaded users: ", users);
-        return  users;
-        /*
-        createConnection().then(async connection => {
-            console.log("Loading users from the database...");
-        const users = await connection.manager.find(UserEntity);
-        console.log("Loaded users: ", users);
-
-        return  users;
-        console.log(`\t\t\t ** Closing Connection ** \n`)
-        connection.close()
-    }).catch(error => console.log(error));
-*/
         return {failed: true}
     }
 
