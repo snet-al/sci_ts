@@ -4,6 +4,7 @@ import {Container} from "typedi";
 import controllers from './controllers'
 import {createConnection, getConnectionOptions} from 'typeorm';
 let typeorm = require('typeorm');
+import entities from "./model/index.entity"
 
 useContainer(Container);
 typeorm.useContainer(Container);
@@ -34,7 +35,8 @@ const connection = createConnection({
     port: Number.parseInt(process.env.TYPEORM_PORT || '3106'),
     username: process.env.TYPEORM_USERNAME ||  "admin",
     password: process.env.TYPEORM_PASSWORD || "admin",
-    database: process.env.TYPEORM_DATABASE ||  "test"
+    database: process.env.TYPEORM_DATABASE ||  "test",
+    entities: entities.entities
 });
 connection.then(() => {
     expressApp.listen(port);

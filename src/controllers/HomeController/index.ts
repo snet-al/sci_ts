@@ -1,14 +1,13 @@
 import {JsonController, Get, Post, Param, Body} from "routing-controllers";
 import {Service} from "typedi";
 import {User} from "../../model/User";
-import {InjectRepository} from "typeorm-typedi-extensions";
 
 @Service()
 @JsonController()
 export class HomeController {
 
     constructor(
-        @InjectRepository(User) public user: User,
+       public user: User,
     ){}
 
     @Get('/')

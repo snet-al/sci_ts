@@ -1,14 +1,14 @@
-import {Column, Entity, EntityRepository, IsNull, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, EntityRepository, PrimaryGeneratedColumn} from "typeorm";
 
 
-@Entity()
+@Entity("sci_users")
 @EntityRepository()
-export class UserEntity {
+export class UserEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    projectId: number;
+    public projectId: number;
 
     @Column()
     lastName: string;

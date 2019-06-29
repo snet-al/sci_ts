@@ -1,6 +1,6 @@
 import {Column, Entity, EntityRepository, IsNull, PrimaryGeneratedColumn} from "typeorm";
 
-@Entity()
+@Entity("sci_details")
 @EntityRepository()
 export class UserDetailEntity {
     @PrimaryGeneratedColumn()
