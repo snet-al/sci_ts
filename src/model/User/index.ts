@@ -5,11 +5,23 @@ import {exec} from "child_process";
 import { Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 
+export class UserDto{
+    public firstName: string;
+    public lastName: string;
+    public UID: number;
+    public projectId: number;
+
+}
+
+
 @Service()
 export class User {
+    public fields : UserDto ;
+    public detail : Details;
 
     constructor(
-        @InjectRepository(UserEntity) public userEntity: Repository<UserEntity>, public detail : Details
+                @InjectRepository(UserEntity)
+                public userEntity: Repository<UserEntity>
     ) {}
 
     getUserWithID(id: number){
@@ -17,27 +29,30 @@ export class User {
     }
 
 
-    getAllUserDettails(){
+    getAllUserDetails(){
         return this.detail.userDetails.find()
     }
 
-    registerData(){
-        return this.userEntity.create()
 
+    deploy(u: UserDto){
+        this.exec(u.projectId);
+        return this.userEntity.save(u)
 
     }
-
-    deploy(){
-        this.registerData();
-        exec(`./shellScripts/shellScriptProject_No${1}.sh`, (err, stdout, stderr) => {
+    exec(pID: number){
+        exec(`./shellScripts/shellScriptProject_No${pID}.sh`,
+            (err, stdout, stderr) => {
             // your callback
-            console.log(`\t\t******** ************* \t EXECUTED   **************** ******** \n 
-            \n \t \t \t \t ******** OUTPUT ************ \n \n ${stdout}`);
+            console.log(`\t\t******** ************* \t 
+            EXECUTED   **************** ******** \n
+            \n \t \t \t \t ******** OUTPUT 
+            ************ \n \n ${stdout}`);
             if (err) {
-                console.log(`ProjectId == ${1} \t does not EXIST... \n\n \t\t ********* LOGGED ERROR ******** \n ${err}`)
+                console.log(`ProjectId == ${pID} \t
+                 does not EXIST... \n\n \t\t ********* 
+                 LOGGED ERROR ******** \n ${err}`)
             }
         });
-
     }
 
 

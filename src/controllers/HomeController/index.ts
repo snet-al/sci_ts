@@ -1,7 +1,6 @@
 import {JsonController, Get, Post, Param, Body} from "routing-controllers";
 import {Service} from "typedi";
-import {User} from "../../model/User";
-
+import {User, UserDto} from "../../model/User";
 @Service()
 @JsonController()
 export class HomeController {
@@ -11,13 +10,13 @@ export class HomeController {
     ){}
 
     @Get('/')
-    getAll(){
+    getAll(): any{
         return this.user.getAll()
     }
 
     @Get("/projects")
-    all() {
-        return this.user.getAllUserDettails()
+    all(): any {
+        return this.user.getAllUserDetails()
     }
 
     @Get("/info-project/:id")
@@ -27,9 +26,9 @@ export class HomeController {
 
 
     @Post("/deploy")
-    category(@Body() user: User): User {
-        user.deploy();
-        return user
+    category(@Body() u: any): any {
+        return this.user.deploy(u);
+
     }
 
 

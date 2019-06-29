@@ -1,7 +1,7 @@
 import {Column, Entity, EntityRepository, PrimaryGeneratedColumn} from "typeorm";
 
 
-@Entity("sci_users")
+@Entity()
 @EntityRepository()
 export class UserEntity{
     @PrimaryGeneratedColumn()
