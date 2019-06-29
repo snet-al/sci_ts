@@ -5,7 +5,7 @@ import {exec} from "child_process";
 import { Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 
-export class UserDto{
+class UserDto{
     public firstName: string;
     public lastName: string;
     public UID: number;
@@ -17,11 +17,11 @@ export class UserDto{
 @Service()
 export class User {
     public fields : UserDto ;
-    public detail : Details;
 
     constructor(
                 @InjectRepository(UserEntity)
-                public userEntity: Repository<UserEntity>
+                public userEntity: Repository<UserEntity>,
+                public detail : Details
     ) {}
 
     getUserWithID(id: number){
@@ -30,7 +30,7 @@ export class User {
 
 
     getAllUserDetails(){
-        return this.detail.userDetails.find()
+        return this.detail.findAll()
     }
 
 

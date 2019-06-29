@@ -1,6 +1,6 @@
 import {JsonController, Get, Post, Param, Body} from "routing-controllers";
 import {Service} from "typedi";
-import {User, UserDto} from "../../model/User";
+import {User} from "../../model/User";
 @Service()
 @JsonController()
 export class HomeController {
@@ -19,7 +19,7 @@ export class HomeController {
         return this.user.getAllUserDetails()
     }
 
-    @Get("/info-project/:id")
+    @Get("/info-user/:id")
     one(@Param("id") id: number): any {
         return this.user.getUserWithID(id)
     }

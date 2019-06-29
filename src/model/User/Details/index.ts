@@ -8,9 +8,10 @@ export class Details {
 
     constructor(
         @InjectRepository(UserDetailEntity) public userDetails: Repository<UserDetailEntity>
-    ) {
+    ) {}
 
+
+    findAll() {
+        this.userDetails.find()
     }
-
-
 }
