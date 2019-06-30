@@ -3,16 +3,16 @@ import {Column, Entity, EntityRepository, IsNull, PrimaryGeneratedColumn} from "
 @Entity()
 @EntityRepository()
 export class UserDetailEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    projectId: number;
+  @Column()
+  projectId: number;
 
-    @Column()
-    projectID: string;
+  @Column()
+  projectID: string;
 
-    @Column()
-    projectDetails: string;
+  @Column()
+  projectDetails: string;
 
 }

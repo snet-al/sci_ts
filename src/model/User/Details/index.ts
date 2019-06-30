@@ -6,12 +6,12 @@ import {Repository} from "typeorm";
 @Service()
 export class Details {
 
-    constructor(
-        @InjectRepository(UserDetailEntity) public userDetails: Repository<UserDetailEntity>
-    ) {}
+  constructor(
+      @InjectRepository(UserDetailEntity) public userDetails: Repository<UserDetailEntity>
+  ) {}
 
 
-    findAll() {
-        this.userDetails.find()
-    }
+  findAll() {
+    this.userDetails.find()
+  }
 }
