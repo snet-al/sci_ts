@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import {createExpressServer, useContainer} from "routing-controllers";
 import {Container} from "typedi";
-import controllers from './controllers'
+import controllers from './app/controllers'
 import {createConnection, getConnectionOptions} from 'typeorm';
 
 let typeorm = require('typeorm');
-import entities from "./models/index.entity"
+import entities from "./app/models/index.entity"
 
 useContainer(Container);
 typeorm.useContainer(Container);
