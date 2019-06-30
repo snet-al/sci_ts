@@ -24,7 +24,6 @@ export class HomeController {
     return this.user.getUserWithID(id)
   }
 
-
   @Post("/deploy")
   category(@Body() u: any): any {
     return this.user.deploy(u);
