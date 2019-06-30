@@ -1,43 +1,33 @@
-import {JsonController, Get, Post, Param, Delete, Body, Put} from "routing-controllers";
+import {JsonController, Get, Post, Param, Body} from "routing-controllers";
 import {Service} from "typedi";
-import {User} from "../../model/User";
-import {Details} from "../../model/User/Details";
+import {User} from "../../models/User";
 
 @Service()
 @JsonController()
 export class HomeController {
+  constructor(
+      public user: User,
+  ){}
 
-    constructor(
-        protected user: User
-    ) {}
+  @Get('/')
+  getAll(): any{
+    return this.user.getAll()
+  }
 
-    @Get('/')
-    home(){
-        return 'Hello World'
-    }
+  @Get("/projects")
+  all(): any {
+    return this.user.getAllUserDetails()
+  }
 
-    @Get("/projects")
-    all() {
-        return [this.user.getAllDets(), this.user.getDetails()]
-    }
+  @Get("/info-user/:id")
+  one(@Param("id") id: number): any {
+    return this.user.getUserWithID(id)
+  }
 
-    @Get("/info-project/:id")
-    one(@Param("id") id: number): Details {
-        return this.user.details.projectNo(id)
-    }
+  @Post("/deploy")
+  category(@Body() u: any): any {
+    return this.user.deploy(u);
+  }
 
-
-    @Post("/deploy")
-    category(@Body() user: User): User {
-        user.deploy();
-        return user
-    }
-
-
-    @Delete("/delete-project/:id")
-    delete(@Param("id") id: number): any {
-        console.log(`Going to delete details for project with id: ${id}`)
-        return this.user.delProjectDetails(id)
-    }
 
 }
