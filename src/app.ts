@@ -5,7 +5,7 @@ import controllers from './controllers'
 import {createConnection, getConnectionOptions} from 'typeorm';
 
 let typeorm = require('typeorm');
-import entities from "./model/index.entity"
+import entities from "./models/index.entity"
 
 useContainer(Container);
 typeorm.useContainer(Container);

@@ -1,6 +1,6 @@
 import {JsonController, Get, Post, Param, Body} from "routing-controllers";
 import {Service} from "typedi";
-import {User} from "../../model/User";
+import {User} from "../../models/User";
 
 @Service()
 @JsonController()
