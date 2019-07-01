@@ -69,8 +69,8 @@ __________________________________________________________________________
 ##### Method: DELETE
 ```typescript
 
-     http://localhost:3010/delete-project/:id
-              Deletes details for the project with the given ID
+     http://localhost:3010/delete-user/:id
+              Rturns Details for the user with the given ID
              
 
 ```

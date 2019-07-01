@@ -29,7 +29,7 @@ export class User {
 
 
   getUserWithID(id: number){
-    return this.userEntity.findOne(id)
+    return this.userEntity.find({UID: id})
   }
 
   getAllUserDetails(){
