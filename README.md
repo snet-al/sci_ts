@@ -2,7 +2,7 @@
 
 1) Install all dependencies:
 
-   ### `yarn`    | |    `npm install`
+   #####`yarn`    | |    `npm install`
     
 2) I. Run the project without authentication requirements:
 
