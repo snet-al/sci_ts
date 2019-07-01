@@ -2,7 +2,7 @@
 
 1) Install all dependencies:
 
-   ####`yarn`    | |    `npm install`
+        yarn    or    npm install
     
 2) I. Run the project without authentication requirements:
 
@@ -10,7 +10,7 @@
     
     II. Run the project with authentication requirements:
 
-        `yarn start:auth`  or  `npm run start:auth`
+        yarn start:auth  or  npm run start:auth
 
 3) Open in browser:
     
@@ -33,14 +33,14 @@ __________________________________________________________________________
 
 
 ##### Method: GET
-```json5
+```typescript
 
   http://localhost:3010/ 
         returns "HELLO WORLD"
 
 ```
 ##### Method: GET
-```json
+```typescript
 
   http://localhost:3010/info-project/:id
         returns details for the projiect with the given id
@@ -48,7 +48,7 @@ __________________________________________________________________________
    ``` 
    
    ##### Method: POST
-   ```json5
+   ```typescript
 
       http://localhost:3010/deploy
             takes as parameters:
@@ -67,7 +67,7 @@ __________________________________________________________________________
 
 ```
 ##### Method: DELETE
-```json5
+```typescript
 
      http://localhost:3010/delete-project/:id
               Deletes details for the project with the given ID
