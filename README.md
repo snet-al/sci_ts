@@ -70,7 +70,7 @@ __________________________________________________________________________
 ```typescript
 
      http://localhost:3010/delete-user/:id
-              Rturns Details for the user with the given ID
+              Rturns Details for the user with the give UID
              
 
 ```
