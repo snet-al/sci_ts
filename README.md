@@ -1,16 +1,25 @@
 # routing-controllers with express demo
 
-1. Install all dependencies:
+1) Install all dependencies:
 
-    `yarn`
+   ### `yarn`    | |    `npm install`
     
-2. Run the project:
+2) I. Run the project without authentication requirements:
 
-    `yarn start`
+        yarn start      OR     npm run start
+    
+    II. Run the project with authentication requirements:
 
-3. Open in browser:
+        `yarn start:auth`  or  `npm run start:auth`
+
+3) Open in browser:
+    
+   
+         PORT: 3000    (No Authentication Required)
+    
+         PORT: 3100    (Authentication Required)
  
-    `http://localhost:3000/posts`
+                    http://localhost:PORT/
 
 ### Using with older versions of node
 

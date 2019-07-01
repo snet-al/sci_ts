@@ -6,6 +6,7 @@ import {createConnection, getConnectionOptions} from 'typeorm';
 
 let typeorm = require('typeorm');
 import entities from "./app/models/index.entity"
+import * as express from "express";
 
 useContainer(Container);
 typeorm.useContainer(Container);
@@ -28,7 +29,7 @@ let port = process.env.SERVER_PORT || 3000;
 const expressApp = createExpressServer({
   controllers: controllers.controllers
 });
-
+expressApp.use(express.static(__dirname + "/public"))
 getConnectionOptions();
 const connection = createConnection({
   type: getType(process.env.TYPEORM_CONNECTION || 'mysql'),
