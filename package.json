@@ -4,7 +4,8 @@
    "description": "SCI system with nodejs coded in typescript",
    "main": "app.ts",
    "scripts": {
-      "start": "nodemon -x ts-node src/app.ts"
+      "start": "nodemon -x ts-node src/app.ts",
+      "start:auth": "nodemon -x ts-node src/app_oauth.ts"
    },
    "repository": {
       "type": "git",
