@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import {Action, createExpressServer, useContainer} from "routing-controllers";
-import {Container} from "typedi";
+import {Container, Service} from "typedi";
 import controllers from './app_user/controllers'
-import {createConnection, getConnectionOptions} from "typeorm";
-
-let typeorm = require('typeorm');
+import {createConnection, getConnectionOptions, Repository} from "typeorm";
+import * as typeorm from "typeorm"
 import entities from "./app_user/models/index.entity"
 import * as express from "express"
+import {User} from "./app_user/models/User";
 
 useContainer(Container);
 typeorm.useContainer(Container);
@@ -39,18 +39,12 @@ const connection = createConnection({
   entities: entities.entities
 });
 
-connection.then(() => {
+
+connection.then(c => {
 
   const expressApp = createExpressServer({
     controllers: controllers.controllers,
-    authorizationChecker: async (action: Action, roles?: string[]) => {
 
-      // perform queries based on token from request headers
-      const token = action.request.headers["authorization"];
-      // return database.findUserByToken(token).roles.in(roles);
-      console.log(token);
-      return token
-    }
   });
   expressApp.use(express.static(__dirname + "/public"));
 

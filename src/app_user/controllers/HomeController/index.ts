@@ -12,25 +12,20 @@ export class HomeController {
   ){}
 
 
-  @Authorized()
   @Get('/all')
   getAll(): any{
     return this.user.getAll()
   }
 
-  @Authorized()
   @Get("/projects")
   all(): any {
     return this.user.getAllUserDetails()
   }
 
-  @Authorized()
   @Get("/info-user/:id")
   one(@Param("id") id: number): any {
     return this.user.getUserWithID(id)
   }
-
-  @Authorized()
   @Post("/deploy")
   dep(@Body() u: any): any {
     return this.user.deploy(u);

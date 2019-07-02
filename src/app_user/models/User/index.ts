@@ -2,7 +2,7 @@ import {Details} from './Details'
 import { Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
-import { Repository} from "typeorm";
+import {IsNull, Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 
 
@@ -60,5 +60,9 @@ export class User {
 
   getAll() {
     return this.userEntity.find()
+  }
+
+  static valuateUser() {
+    return undefined;
   }
 }
