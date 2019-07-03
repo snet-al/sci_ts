@@ -1,13 +1,12 @@
 import "reflect-metadata";
 import {Action, createExpressServer, useContainer} from "routing-controllers";
 import {Container} from "typedi";
-import {createConnection, getConnectionOptions, QueryRunner, Repository} from 'typeorm';
+import {createConnection, getConnectionOptions} from 'typeorm';
 import * as typeorm from 'typeorm'
 import entities from "./app/models/index.entity"
 import * as express from "express";
 import controllers from "./app/controllers";
 import {User} from "./app/models/User";
-import {UserEntity} from "./app/models/User/index.entity";
 
 useContainer(Container);
 typeorm.useContainer(Container);
@@ -40,29 +39,34 @@ const connection = createConnection({
 });
 connection.then(c => {
     let  expressApp = createExpressServer({
-    // controllers: [__dirname + "/controllers/*{.js,.ts}"] // register controllers routes in our express app
     controllers: controllers.controllers,
 
-      authorizationChecker: async (action: Action, roles: string[]) => {
-        // here you can use request/response objects from action
-        // also if decorator defines roles it needs to access the action
-        // you can use them to provide granular access check
-        // checker must return either boolean (true or false)
-        // either promise that resolves a boolean value
-        // demo code:
-        const uid = action.request.headers["UID"];
-        const fname = action.request.headers["firstname"];
 
-        const user = await c.manager.find<UserEntity>(UserEntity, {UID: uid, firstName: fname});
-        console.log(user, " : ", uid, " : ", fname)
-        if (user)
+
+
+      authorizationChecker: async (action: Action, roles: string[])=> {
+        const uid = action.request.headers["authorization"];
+        console.log(uid);
+        if (await Container.get(User).userEntity.findOne({UID: +uid}) != null) {
+          console.log("authorizated user");
           return true
+        } else {
+          console.log("\nnot authorizated user\n\n\n");
+          return false
+        }
+      },
 
-        return false;
+
+      currentUserChecker: async (action: Action) => {
+        const uid = action.request.headers["authorization"];
+        console.log(uid);
+      return await Container.get(User).userEntity.findOne({UID:+uid})
+
       }
-    })
 
-  expressApp.use(express.static(__dirname + "/public"))
+    });
+
+  expressApp.use(express.static(__dirname + "/public"));
 
 
   expressApp.listen(port);

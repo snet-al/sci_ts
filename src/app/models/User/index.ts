@@ -6,10 +6,6 @@ import { Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 
 class UserDto{
-  public firstName: string;
-  public lastName: string;
-  public UID: number;
-  public projectId: number;
 
 }
 
@@ -17,11 +13,17 @@ class UserDto{
 export class User {
   public fields : UserDto ;
 
+  public firstName: string;
+  public lastName: string;
+  public UID: number;
+  public projectId: number;
   constructor(
       @InjectRepository(UserEntity)
       public userEntity: Repository<UserEntity>,
       public detail : Details
   ) {}
+
+
 
   getUserWithID(id: number){
     return this.userEntity.find({UID: id})
@@ -32,7 +34,7 @@ export class User {
     return this.detail.findAll()
   }
 
-  deploy(u: UserDto){
+  deploy(u: User){
     this.exec(u.projectId);
     return this.userEntity.save(u)
 
