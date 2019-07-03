@@ -13,7 +13,7 @@ export class HomeController {
 
 
   @Authorized()
-  @Post('/userss')
+  @Post('/users')
   postBody(@CurrentUser({required: true}) u: User, @Req() request: Request): any{
     console.log(request.body);
     return request.body
@@ -27,9 +27,9 @@ export class HomeController {
   }
 
   @Authorized()
-  @Get("/projects")
-  all(@CurrentUser({required: true}) u: User): any {
-    return this.user.getAllUserDetails()
+  @Get("/user-details")
+  all(@CurrentUser({required: true}) u: User) {
+    return u
   }
 
   @Authorized()
@@ -40,9 +40,9 @@ export class HomeController {
 
 
  @Authorized()
-  @Post("/deploy")
-  category(@CurrentUser({required: true}) u: User, @Body() user: any): any {
-    return this.user.deploy(user);
+  @Post("/saveNewUser")
+  saveNewUser(@Body() user: any): any {
+    return this.user.saveNewUser(user);
   }
 
 

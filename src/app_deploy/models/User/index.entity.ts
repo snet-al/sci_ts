@@ -7,9 +7,6 @@ export class UserEntity{
   id: number;
 
   @Column()
-  public projectId: number;
-
-  @Column()
   lastName: string;
 
   @Column()

@@ -2,17 +2,23 @@ import {Column, Entity, EntityRepository, IsNull, PrimaryGeneratedColumn} from "
 
 @Entity()
 @EntityRepository()
-export class UserDetailEntity {
+export class ProjectTypeEntity{
+
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  projectId: number;
+  @Column({unique: true, nullable: false})
+  typeID: number
 
   @Column()
-  projectID: string;
+  programmingLang: string;
 
   @Column()
-  projectDetails: string;
+  framework: string;
 
+  @Column()
+  isValid: boolean;
+
+  @Column()
+  description: string;
 }

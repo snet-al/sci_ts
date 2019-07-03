@@ -5,7 +5,8 @@
    "main": "app.ts",
    "scripts": {
       "start": "nodemon -x ts-node src/app.ts",
-      "start:auth": "nodemon -x ts-node src/app_oauth.ts"
+      "start:auth": "nodemon -x ts-node src/app_oauth.ts",
+      "start:deploy": "nodemon -x ts-node src/app_deploy.ts"
    },
    "repository": {
       "type": "git",

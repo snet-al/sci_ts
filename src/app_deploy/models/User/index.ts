@@ -1,26 +1,21 @@
-import {Details} from './Details'
+
 import { Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
 import { Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 
-class UserDto{
 
-}
 
 @Service()
 export class User {
-  public fields : UserDto ;
 
   public firstName: string;
   public lastName: string;
   public UID: number;
-  public projectId: number;
   constructor(
       @InjectRepository(UserEntity)
       public userEntity: Repository<UserEntity>,
-      public detail : Details
   ) {}
 
 
@@ -31,15 +26,22 @@ export class User {
   }
 
   getAllUserDetails(){
-    return this.detail.findAll()
+    return {
+      firstName: this.firstName,
+      lastNAme: this.lastName,
+      UID: this.UID,
+    }
+  }
+  getAll() {
+    return this.userEntity.find()
   }
 
-  deploy(u: User){
-    this.exec(u.projectId);
+  saveNewUser(u: User){
+
     return this.userEntity.save(u)
 
   }
-
+/*
   exec(pID: number){
     exec(`./shellScripts/shellScriptProject_No${pID}.sh`,
         (err, stdout, stderr) => {
@@ -55,8 +57,5 @@ export class User {
           }
         });
   }
-
-  getAll() {
-    return this.userEntity.find()
-  }
+*/
 }

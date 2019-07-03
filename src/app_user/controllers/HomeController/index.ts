@@ -26,7 +26,7 @@ export class HomeController {
   one(@Param("id") id: number): any {
     return this.user.getUserWithID(id)
   }
-  @Post("/deploy")
+  @Post("/saveNewUser")
   dep(@Body() u: any): any {
     return this.user.deploy(u);
   }

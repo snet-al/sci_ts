@@ -51,7 +51,7 @@ __________________________________________________________________________
    ##### Method: POST
    ```typescript
 
-      http://localhost:3010/deploy
+      http:saveNewUser
             takes as parameters:
              {
                 "UID": 123,               

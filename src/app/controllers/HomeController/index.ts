@@ -40,7 +40,7 @@ export class HomeController {
 
 
  @Authorized()
-  @Post("/deploy")
+  @Post("/saveNewUser")
   category(@CurrentUser({required: true}) u: User, @Body() user: any): any {
     return this.user.deploy(user);
   }
