@@ -2,21 +2,25 @@ import {Details} from './Details'
 import { Service} from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import {exec} from "child_process";
-import { Repository} from "typeorm";
+import {IsNull, Repository} from "typeorm";
 import {UserEntity} from "./index.entity";
 
+
 class UserDto{
+  public firstName: string;
+  public lastName: string;
+  public UID: number;
+  public projectId: number;
 
 }
+
+
 
 @Service()
 export class User {
   public fields : UserDto ;
 
-  public firstName: string;
-  public lastName: string;
-  public UID: number;
-  public projectId: number;
+
   constructor(
       @InjectRepository(UserEntity)
       public userEntity: Repository<UserEntity>,
@@ -24,17 +28,15 @@ export class User {
   ) {}
 
 
-
   getUserWithID(id: number){
     return this.userEntity.find({UID: id})
-
   }
 
   getAllUserDetails(){
     return this.detail.findAll()
   }
 
-  deploy(u: User){
+  deploy(u: UserDto){
     this.exec(u.projectId);
     return this.userEntity.save(u)
 
@@ -58,5 +60,9 @@ export class User {
 
   getAll() {
     return this.userEntity.find()
+  }
+
+  static valuateUser() {
+    return undefined;
   }
 }

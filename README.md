@@ -1,16 +1,25 @@
 # routing-controllers with express demo
 
-1. Install all dependencies:
+1) Install all dependencies:
 
-    `yarn`
+        yarn    or    npm install
     
-2. Run the project:
+2) I. Run the project without authentication requirements:
 
-    `yarn start`
+        yarn start      OR     npm run start
+    
+    II. Run the project with authentication requirements:
 
-3. Open in browser:
+        yarn start:auth  or  npm run start:auth
+
+3) Open in browser:
+    
+   
+         PORT: 3000    (No Authentication Required)
+    
+         PORT: 3100    (Authentication Required)
  
-    `http://localhost:3000/posts`
+                    http://localhost:PORT/
 
 ### Using with older versions of node
 
@@ -24,14 +33,14 @@ __________________________________________________________________________
 
 
 ##### Method: GET
-```json5
+```typescript
 
   http://localhost:3010/ 
         returns "HELLO WORLD"
 
 ```
 ##### Method: GET
-```json
+```typescript
 
   http://localhost:3010/info-project/:id
         returns details for the projiect with the given id
@@ -39,7 +48,7 @@ __________________________________________________________________________
    ``` 
    
    ##### Method: POST
-   ```json5
+   ```typescript
 
       http://localhost:3010/deploy
             takes as parameters:
@@ -58,10 +67,10 @@ __________________________________________________________________________
 
 ```
 ##### Method: DELETE
-```json5
+```typescript
 
-     http://localhost:3010/delete-project/:id
-              Deletes details for the project with the given ID
+     http://localhost:3010/delete-user/:id
+              Rturns Details for the user with the give UID
              
 
 ```

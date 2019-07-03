@@ -1,11 +1,12 @@
 import "reflect-metadata";
-import {createExpressServer, useContainer} from "routing-controllers";
+import {Action, createExpressServer, useContainer} from "routing-controllers";
 import {Container} from "typedi";
-import controllers from './app/controllers'
 import {createConnection, getConnectionOptions} from 'typeorm';
-
-let typeorm = require('typeorm');
+import * as typeorm from 'typeorm'
 import entities from "./app/models/index.entity"
+import * as express from "express";
+import controllers from "./app/controllers";
+import {User} from "./app/models/User";
 
 useContainer(Container);
 typeorm.useContainer(Container);
@@ -25,9 +26,6 @@ const getType = (envType: any) => {
 
 let port = process.env.SERVER_PORT || 3000;
 
-const expressApp = createExpressServer({
-  controllers: controllers.controllers
-});
 
 getConnectionOptions();
 const connection = createConnection({
@@ -39,7 +37,38 @@ const connection = createConnection({
   database: process.env.TYPEORM_DATABASE || "test",
   entities: entities.entities
 });
-connection.then(() => {
+connection.then(c => {
+    let  expressApp = createExpressServer({
+    controllers: controllers.controllers,
+
+
+
+
+      authorizationChecker: async (action: Action, roles: string[])=> {
+        const uid = action.request.headers["authorization"];
+        console.log(uid);
+        if (await Container.get(User).userEntity.findOne({UID: +uid}) != null) {
+          console.log("authorizated user");
+          return true
+        } else {
+          console.log("\nnot authorizated user\n\n\n");
+          return false
+        }
+      },
+
+
+      currentUserChecker: async (action: Action) => {
+        const uid = action.request.headers["authorization"];
+        console.log(uid);
+      return await Container.get(User).userEntity.findOne({UID:+uid})
+
+      }
+
+    });
+
+  expressApp.use(express.static(__dirname + "/public"));
+
+
   expressApp.listen(port);
 
 });
