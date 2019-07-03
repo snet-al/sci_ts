@@ -41,9 +41,6 @@ connection.then(c => {
     let  expressApp = createExpressServer({
     controllers: controllers.controllers,
 
-
-
-
       authorizationChecker: async (action: Action, roles: string[])=> {
         const uid = action.request.headers["authorization"];
         console.log(uid);
@@ -56,14 +53,12 @@ connection.then(c => {
         }
       },
 
-
       currentUserChecker: async (action: Action) => {
         const uid = action.request.headers["authorization"];
         console.log(uid);
       return await Container.get(User).userEntity.findOne({UID:+uid})
 
       }
-
     });
 
   expressApp.use(express.static(__dirname + "/public"));
